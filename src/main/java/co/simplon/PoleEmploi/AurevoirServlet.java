@@ -14,6 +14,6 @@ public class AurevoirServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getSession().invalidate();
-		response.sendRedirect("/villes");
+		response.sendRedirect("./villes");
 	}
 }

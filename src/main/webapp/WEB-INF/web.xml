@@ -3,4 +3,50 @@
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
 	<display-name>Servlet REST Service</display-name>
+
+	<servlet>
+		<servlet-name>Demo</servlet-name>
+		<servlet-class>co.simplon.PoleEmploi.DemoServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Bonjour</servlet-name>
+		<servlet-class>co.simplon.PoleEmploi.BonjourServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Aurevoir</servlet-name>
+		<servlet-class>co.simplon.PoleEmploi.AurevoirServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Villes</servlet-name>
+		<servlet-class>co.simplon.PoleEmploi.patrimoine.controler.VillesServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Ville</servlet-name>
+		<servlet-class>co.simplon.PoleEmploi.patrimoine.controler.VilleServlet</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>Demo</servlet-name>
+		<url-pattern>/dynamic/*</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>Bonjour</servlet-name>
+		<url-pattern>/bonjour</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>Aurevoir</servlet-name>
+		<url-pattern>/aurevoir</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>Villes</servlet-name>
+		<url-pattern>/villes</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>Ville</servlet-name>
+		<url-pattern>/ville</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
 </web-app>

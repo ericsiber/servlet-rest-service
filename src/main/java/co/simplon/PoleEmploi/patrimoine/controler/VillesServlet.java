@@ -52,14 +52,14 @@ public class VillesServlet extends HttpServlet {
 			out.println("<ul>");
 			for (Ville ville : villes) {
 				out.println("<li>");
-				out.println("<a href=\"/ville?id=" + ville.getId() + "\">"
+				out.println("<a href=\"./ville?id=" + ville.getId() + "\">"
 						+ ville.getNom() + "</a>");
 				out.println("</li>");
 			}
 			out.println("</ul>");
 			out.println("<br>");
 			if (session != null) {
-				out.println("<a href=\"/aurevoir\">Se déconnecter</a>");
+				out.println("<a href=\"./aurevoir\">Se déconnecter</a>");
 			}
 			resp.setContentType("text/html");
 		}

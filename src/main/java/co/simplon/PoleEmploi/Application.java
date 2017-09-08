@@ -4,11 +4,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.DefaultServlet;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-
-import co.simplon.PoleEmploi.patrimoine.controler.VilleServlet;
-import co.simplon.PoleEmploi.patrimoine.controler.VillesServlet;
+import org.eclipse.jetty.webapp.WebAppContext;
 
 public class Application {
 
@@ -18,22 +14,12 @@ public class Application {
 
 		Server server = new Server(9093);
 
-		final ServletContextHandler context = new ServletContextHandler(
-				ServletContextHandler.SESSIONS);
-		context.addServlet(DefaultServlet.class, "/*");
-
-		String[] welcomeFiles = { "index.html" };
-		context.setWelcomeFiles(welcomeFiles);
-		context.setResourceBase("./src/main/webapp/");
-		context.addServlet(DemoServlet.class, "/dynamic/*");
-		context.addServlet(VillesServlet.class, "/villes");
-		context.addServlet(VilleServlet.class, "/ville");
-		context.addServlet(BonjourServlet.class, "/bonjour");
-		context.addServlet(AurevoirServlet.class, "/aurevoir");
-
-		server.setHandler(context);
-		server.setStopAtShutdown(true);
-
+		WebAppContext webAppContext = new WebAppContext();
+		webAppContext.setDescriptor("src/main/webapp/WEB-INF/web.xml");
+		webAppContext.setResourceBase("src/main/webapp/");
+		webAppContext.setContextPath("/servlet-rest-service");
+		server.setHandler(webAppContext);
+			
 		server.start();
 		server.join();
 	}

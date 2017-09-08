@@ -21,7 +21,7 @@ public class BonjourServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.println("Bonjour " + prenom);
 		out.println("<br>");
-		out.println("<a href=\"/villes\">Visualiser la liste des villes</a>");
+		out.println("<a href=\"./villes\">Visualiser la liste des villes</a>");
 		response.setContentType("text/html");
 	}
 }

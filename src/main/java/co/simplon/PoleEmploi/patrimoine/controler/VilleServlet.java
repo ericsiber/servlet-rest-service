@@ -41,7 +41,7 @@ public class VilleServlet extends HttpServlet {
 				out.println("<head><meta charset=\"UTF-8\"><script src=\"https://code.jquery.com/jquery-3.2.1.min.js\" integrity=\"sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=\" crossorigin=\"anonymous\"></script></head>");
 				out.println("Détail d'une ville :");
 				out.println("<br>");
-				out.println("<form action=\"/ville?id=" + ville.getId()
+				out.println("<form action=\"./ville?id=" + ville.getId()
 						+ "\" method=\"post\">");
 
 				out.println("Id : " + ville.getId());
@@ -58,13 +58,13 @@ public class VilleServlet extends HttpServlet {
 				out.println("<input type=\"submit\" value=\"Modifier\"/>");
 				out.println("</form>");
 				out.println("<script>$(document).ready(function(){$(\'#DeleteButton\').click(function(){");
-				out.println("$.ajax({ url: \'/ville?id=" + id
-						+ "\', method: \'DELETE\' }).done(function( data ) { window.location.href = \"/villes\"; });");
+				out.println("$.ajax({ url: \'./ville?id=" + id
+						+ "\', method: \'DELETE\' }).done(function( data ) { window.location.href = \"./villes\"; });");
 				out.println("}); });");
 				out.println("</script>");
 				out.println("<input type=\"button\" value=\"Supprimer\" id=\"DeleteButton\" >");
 				out.println("<br>");
-				out.println("<a href=\"/villes\">Retour à la liste</a>");
+				out.println("<a href=\"./villes\">Retour à la liste</a>");
 				resp.setStatus(HttpServletResponse.SC_OK);
 				resp.setContentType("text/html");
 
@@ -103,7 +103,7 @@ public class VilleServlet extends HttpServlet {
 				ville.setLongitude(Double.parseDouble(longitudeParam));
 				dao.updateVille(ville);
 
-				resp.sendRedirect("/ville?id=" + idParam);
+				resp.sendRedirect("./ville?id=" + idParam);
 			} catch (NumberFormatException e) {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			} finally {
