@@ -8,6 +8,7 @@ import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 
 import co.simplon.PoleEmploi.patrimoine.controler.VilleServlet;
+import co.simplon.PoleEmploi.patrimoine.controler.VillesServlet;
 
 public class Application {
 
@@ -24,6 +25,7 @@ public class Application {
 		context.setWelcomeFiles(welcomeFiles);
 		context.setResourceBase("./src/main/webapp/");
 		context.addServlet(DemoServlet.class, "/dynamic/*");
+		context.addServlet(VillesServlet.class, "/villes");
 		context.addServlet(VilleServlet.class, "/ville");
 		
 		server.setHandler(context);

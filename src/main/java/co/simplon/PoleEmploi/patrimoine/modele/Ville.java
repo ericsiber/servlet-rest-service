@@ -5,10 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "CITIES")
+@NamedQueries({
+		@NamedQuery(name = "Ville.findAll", query = "SELECT v FROM Ville v"),
+		@NamedQuery(name = "Ville.deleteById", query = "DELETE FROM Ville v WHERE v.id = :id") })
 public class Ville {
 
 	@Id
@@ -59,7 +64,8 @@ public class Ville {
 
 	@Override
 	public String toString() {
-		return "Ville [id=" + id + ", nom=" + nom + ", latitude=" + latitude + ", longitude=" + longitude + "]";
+		return "Ville [id=" + id + ", nom=" + nom + ", latitude=" + latitude
+				+ ", longitude=" + longitude + "]";
 	}
 
 }

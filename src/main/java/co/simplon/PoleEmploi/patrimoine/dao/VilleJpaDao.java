@@ -1,5 +1,7 @@
 package co.simplon.PoleEmploi.patrimoine.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import co.simplon.PoleEmploi.patrimoine.modele.Ville;
@@ -40,6 +42,12 @@ public class VilleJpaDao implements VilleDao {
 		ville = entityManager.merge(ville);
 		entityManager.getTransaction().commit();
 		return ville;
+	}
+
+	@Override
+	public List<Ville> findAll(int first, int size) {
+		return entityManager.createNamedQuery("Ville.findAll", Ville.class)
+				.setFirstResult(first).setMaxResults(size).getResultList();
 	}
 
 }
