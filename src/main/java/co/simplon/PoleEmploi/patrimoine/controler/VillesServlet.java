@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import co.simplon.PoleEmploi.Application;
 import co.simplon.PoleEmploi.patrimoine.dao.VilleDao;
@@ -30,6 +31,13 @@ public class VillesServlet extends HttpServlet {
 		VilleDao dao = new VilleJpaDao(em);
 		List<Ville> villes = dao.findAll(0, 10);
 		PrintWriter out = resp.getWriter();
+		HttpSession session = req.getSession(false);
+		String prenom = null;
+		if (session != null) {
+			prenom = (String) session.getAttribute("prenom");
+		}
+		out.println("Bienvenue " + (prenom != null ? prenom : "inconnu"));
+		out.println("<br><br>");
 		out.println("Liste de villes");
 		out.println("<ul>");
 		for (Ville ville : villes) {
@@ -39,6 +47,10 @@ public class VillesServlet extends HttpServlet {
 			out.println("</li>");
 		}
 		out.println("</ul>");
+		out.println("<br>");
+		if (session != null) {
+			out.println("<a href=\"/aurevoir\">Se déconnecter</a>");
+		}
 		resp.setStatus(HttpServletResponse.SC_OK);
 		resp.setContentType("text/html");
 	}
