@@ -16,6 +16,8 @@ import co.simplon.PoleEmploi.patrimoine.dao.VilleDao;
 import co.simplon.PoleEmploi.patrimoine.dao.VilleJpaDao;
 import co.simplon.PoleEmploi.patrimoine.modele.Ville;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class VillesServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -27,32 +29,43 @@ public class VillesServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
+		String acceptHeader = req.getHeader("accept");
+		
 		EntityManager em = createEntityManager();
 		VilleDao dao = new VilleJpaDao(em);
 		List<Ville> villes = dao.findAll(0, 10);
-		PrintWriter out = resp.getWriter();
-		HttpSession session = req.getSession(false);
-		String prenom = null;
-		if (session != null) {
-			prenom = (String) session.getAttribute("prenom");
-		}
-		out.println("Bienvenue " + (prenom != null ? prenom : "inconnu"));
-		out.println("<br><br>");
-		out.println("Liste de villes");
-		out.println("<ul>");
-		for (Ville ville : villes) {
-			out.println("<li>");
-			out.println("<a href=\"/ville?id=" + ville.getId() + "\">"
-					+ ville.getNom() + "</a>");
-			out.println("</li>");
-		}
-		out.println("</ul>");
-		out.println("<br>");
-		if (session != null) {
-			out.println("<a href=\"/aurevoir\">Se déconnecter</a>");
+
+		if ("application/json".equals(acceptHeader)) {
+			ObjectMapper objectMapper = new ObjectMapper();
+			resp.setContentType("application/json");
+			objectMapper.writeValue(resp.getWriter(), villes);
+		} else {
+			PrintWriter out = resp.getWriter();
+			HttpSession session = req.getSession(false);
+			String prenom = null;
+			if (session != null) {
+				prenom = (String) session.getAttribute("prenom");
+			}
+			out.println("Bienvenue " + (prenom != null ? prenom : "inconnu"));
+			out.println("<br><br>");
+			out.println("Liste de villes");
+			out.println("<ul>");
+			for (Ville ville : villes) {
+				out.println("<li>");
+				out.println("<a href=\"/ville?id=" + ville.getId() + "\">"
+						+ ville.getNom() + "</a>");
+				out.println("</li>");
+			}
+			out.println("</ul>");
+			out.println("<br>");
+			if (session != null) {
+				out.println("<a href=\"/aurevoir\">Se déconnecter</a>");
+			}
+			resp.setContentType("text/html");
 		}
 		resp.setStatus(HttpServletResponse.SC_OK);
-		resp.setContentType("text/html");
+
+		
 	}
 
 }
