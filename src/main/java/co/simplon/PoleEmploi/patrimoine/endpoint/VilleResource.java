@@ -19,15 +19,10 @@ public class VilleResource {
 	}
 	
     @GET
-    public String getVilles() {
-		
+    public List<Ville> getVilles() {
 		EntityManager em = createEntityManager();
 		VilleDao dao = new VilleJpaDao(em);
 		List<Ville> villes = dao.findAll(0, 10);
-		String resultat = "";
-		for (Ville ville : villes) {
-			resultat = resultat + ville.getNom() + " ";
-		}
-		return resultat;
+		return villes;
     }
 }
