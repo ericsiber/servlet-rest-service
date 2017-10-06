@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import co.simplon.PoleEmploi.Application;
 import co.simplon.PoleEmploi.patrimoine.dao.VilleDao;
@@ -19,6 +21,7 @@ public class VilleResource {
 	}
 	
     @GET
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Ville> getVilles() {
 		EntityManager em = createEntityManager();
 		VilleDao dao = new VilleJpaDao(em);
