@@ -3,6 +3,7 @@ package co.simplon.PoleEmploi.patrimoine.controler;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,13 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import co.simplon.PoleEmploi.Application;
 import co.simplon.PoleEmploi.patrimoine.dao.VilleDao;
-import co.simplon.PoleEmploi.patrimoine.dao.VilleJpaDao;
 import co.simplon.PoleEmploi.patrimoine.modele.Ville;
 
 public class VilleServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	private VilleDao villeDao;
+	
 	protected EntityManager createEntityManager() {
 		return Application.EMF.createEntityManager();
 	}
@@ -32,10 +35,7 @@ public class VilleServlet extends HttpServlet {
 
 			try {
 				Long id = Long.parseLong(idParam);
-
-				em = createEntityManager();
-				VilleDao dao = new VilleJpaDao(em);
-				Ville ville = dao.getVilleById(id);
+				Ville ville = villeDao.getVilleById(id);
 
 				PrintWriter out = resp.getWriter();
 				out.println("<head><meta charset=\"UTF-8\"><script src=\"https://code.jquery.com/jquery-3.2.1.min.js\" integrity=\"sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=\" crossorigin=\"anonymous\"></script></head>");
@@ -95,13 +95,11 @@ public class VilleServlet extends HttpServlet {
 				String latitudeParam = req.getParameter("latitude");
 				String longitudeParam = req.getParameter("longitude");
 
-				em = createEntityManager();
-				VilleDao dao = new VilleJpaDao(em);
-				Ville ville = dao.getVilleById(id);
+				Ville ville = villeDao.getVilleById(id);
 				ville.setNom(nomParam);
 				ville.setLatitude(Double.parseDouble(latitudeParam));
 				ville.setLongitude(Double.parseDouble(longitudeParam));
-				dao.updateVille(ville);
+				villeDao.updateVille(ville);
 
 				resp.sendRedirect("./ville?id=" + idParam);
 			} catch (NumberFormatException e) {
@@ -125,9 +123,7 @@ public class VilleServlet extends HttpServlet {
 			EntityManager em = null;
 			try {
 				Long id = Long.parseLong(idParam);
-				em = createEntityManager();
-				VilleDao dao = new VilleJpaDao(em);
-				dao.deleteVilleById(id);
+				villeDao.deleteVilleById(id);
 				resp.setStatus(HttpServletResponse.SC_OK);
 			} catch (NumberFormatException e) {
 				resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

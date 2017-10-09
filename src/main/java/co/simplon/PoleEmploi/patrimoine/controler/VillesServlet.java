@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +23,9 @@ public class VillesServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	@Inject
+	private VilleDao villeDao;
+	
 	protected EntityManager createEntityManager() {
 		return Application.EMF.createEntityManager();
 	}
@@ -31,9 +35,7 @@ public class VillesServlet extends HttpServlet {
 			throws ServletException, IOException {
 		String acceptHeader = req.getHeader("accept");
 		
-		EntityManager em = createEntityManager();
-		VilleDao dao = new VilleJpaDao(em);
-		List<Ville> villes = dao.findAll(0, 10);
+		List<Ville> villes = villeDao.findAll(0, 10);
 
 		if ("application/json".equals(acceptHeader)) {
 			ObjectMapper objectMapper = new ObjectMapper();

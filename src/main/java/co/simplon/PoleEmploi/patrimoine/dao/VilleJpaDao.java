@@ -2,17 +2,18 @@ package co.simplon.PoleEmploi.patrimoine.dao;
 
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 import co.simplon.PoleEmploi.patrimoine.modele.Ville;
 
 public class VilleJpaDao implements VilleDao {
 
+	@Inject
 	private EntityManager entityManager;
 
-	public VilleJpaDao(EntityManager entityManager) {
+	public VilleJpaDao() {
 		super();
-		this.entityManager = entityManager;
 	}
 
 	@Override
