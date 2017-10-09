@@ -3,6 +3,7 @@ package co.simplon.PoleEmploi.patrimoine.endpoint;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -30,12 +31,11 @@ public class VilleResource {
 		return villes;
     }
     
-    @GET
+    @DELETE
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_XML)
-    public Ville getVilleById(@PathParam("id") Long id) {
+    public void deleteVilleById(@PathParam("id") Long id) {
 		EntityManager em = createEntityManager();
 		VilleDao dao = new VilleJpaDao(em);
-		return dao.getVilleById(id);	
+		dao.deleteVilleById(id);
     }
 }
