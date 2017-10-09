@@ -9,6 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import co.simplon.PoleEmploi.Application;
 import co.simplon.PoleEmploi.patrimoine.dao.VilleDao;
@@ -29,6 +31,18 @@ public class VilleResource {
 		VilleDao dao = new VilleJpaDao(em);
 		List<Ville> villes = dao.findAll(0, 10);
 		return villes;
+    }
+    
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_XML)
+    public Response getVilleById(@PathParam("id") Long id) {
+		EntityManager em = createEntityManager();
+		VilleDao dao = new VilleJpaDao(em);
+		Ville ville = dao.getVilleById(id);
+		if (ville != null)
+			return Response.ok(ville).build();
+		return Response.status(Status.NOT_FOUND).build();
     }
     
     @DELETE
