@@ -31,6 +31,15 @@ public class VilleResource {
 		return villes;
     }
     
+    @GET
+    @Path("{id}")
+    @Produces(MediaType.APPLICATION_XML)
+    public Ville getVilleById(@PathParam("id") Long id) {
+		EntityManager em = createEntityManager();
+		VilleDao dao = new VilleJpaDao(em);
+		return dao.getVilleById(id);
+    }
+    
     @DELETE
     @Path("{id}")
     public void deleteVilleById(@PathParam("id") Long id) {
