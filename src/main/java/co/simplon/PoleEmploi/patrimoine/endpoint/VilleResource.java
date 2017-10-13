@@ -72,7 +72,8 @@ public class VilleResource {
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response updateVille(Ville villeAModifier) {
+    public Response updateVille(@PathParam("id") Long id, Ville villeAModifier) {
+    	villeAModifier.setId(id);
     	villeDao.updateVille(villeAModifier);
     	return Response.ok().build();
     }
